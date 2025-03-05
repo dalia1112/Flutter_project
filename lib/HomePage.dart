@@ -11,10 +11,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[50],
       appBar: AppBar(
         leading: Icon(Icons.menu),
         title: Text("Hello World"),
-        backgroundColor:Color(0xFF98FF98),
+        backgroundColor: Colors.teal,
         centerTitle: true,
         actions: [
           Icon(Icons.star),
@@ -28,7 +29,22 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      
-    );
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(width: 100, height: 800, color: Colors.blue[100]),
+          
+          
+          Row(
+              children: [
+                Container(width: 100, height: 100, color: Colors.teal[100]),
+                Container(width: 100, height: 100, color: Colors.pink[100]),
+              ],
+            ),
+          
+          Container(width: 100, height: 800, color: Colors.green[100]),
+        ],
+      ),
+    ); //scaffold
   }
 }

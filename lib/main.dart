@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
     debugShowCheckedModeBanner: false, // Removes debug banner
       title: 'My Flutter App',
-      theme: ThemeData(primarySwatch: Color(0xFFCCFFCC)),
+      theme: ThemeData(primarySwatch: Colors.teal),
       home: HomePage(), 
     );
   }
