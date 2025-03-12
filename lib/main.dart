@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_frst_project/Messanger/messanger_screen.dart';
+import 'package:flutter_frst_project/BMIScreen/BMIScreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     debugShowCheckedModeBanner: false, // Removes debug banner
       title: 'My Flutter App',
       theme: ThemeData(primarySwatch: Colors.teal),
-      home: MessangerScreen(), 
+      home: BMIScreen() 
     );
   }
 }
