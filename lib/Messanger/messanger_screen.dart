@@ -180,7 +180,7 @@ class _MessangerScreenState extends State<MessangerScreen> {
                 separatorBuilder: (context, index) => const Divider(),
                 itemBuilder: (context, index) => MsgItem(
                   name:productsModel!.products![index].title!,
-                  message: productsModel!.products![index].category!,
+                  message: productsModel!.products![index].description!,
                   time: productsModel!.products![index].price!.toString(),
                   image: productsModel!.products![index].thumbnail!,
 

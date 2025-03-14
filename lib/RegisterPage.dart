@@ -1,47 +1,44 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_frst_project/RegisterPage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_frst_project/LoginPage.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   bool isVisible = true;
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Future<void> loginUser() async {
+  Future<void> registerUser() async {
     if (!formKey.currentState!.validate()) return;
 
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
+          .createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
 
-      print("User Logged In: ${userCredential.user!.email}");
-
+      print("User Registered: ${userCredential.user!.email}");
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Login Successful!")),
+        SnackBar(content: Text("Registration Successful!")),
       );
 
-      
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('userEmail', userCredential.user!.email ?? '');
-
-      print("Saved Token: ${prefs.getString('userEmail')}");
-
-    } on FirebaseAuthException catch (e) {
-      print("Login Error: $e");
+      // Navigate to Login Page
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } catch (e) {
+      print("Registration Error: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: ${e.message}")),
+        SnackBar(content: Text("Error: ${e.toString()}")),
       );
     }
   }
@@ -50,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login", style: TextStyle(color: Colors.white)),
+        title: const Text("Register", style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.pink[100],
       ),
@@ -63,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "User Login",
+                  "User Register",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 50),
@@ -95,6 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Please Enter Password";
+                    } else if (value.length < 6) {
+                      return "Password must be at least 6 characters";
                     }
                     return null;
                   },
@@ -123,9 +122,9 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: MaterialButton(
-                    onPressed: loginUser,
+                    onPressed: registerUser,
                     child: const Text(
-                      "Login",
+                      "Register",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -134,16 +133,15 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an account?"),
+                    const Text("Have an account?"),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterPage()),
+                          MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                       },
-                      child: const Text("Register Now"),
+                      child: const Text("Login Now"),
                     ),
                   ],
                 ),
@@ -155,3 +153,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
