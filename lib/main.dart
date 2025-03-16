@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'My Flutter App',
       theme: ThemeData(primarySwatch: Colors.teal),
-      home: LoginPage(),
+      home: MessangerScreen(),
     );
   }
 }
